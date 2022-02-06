@@ -107,7 +107,7 @@ const ViewTickets = () => {
       if (count <= 63) {
         berthAvailble.available = Number(berthAvailble?.available) + 1;      
         await updateBerth(berthAvailble);
-      } else if (rac.available <= 63) {
+      } else if (rac.available <= 18) {
         //push to seat table
         addSeat(racFirst.seat);
          //for move confirm ticket to rac 
