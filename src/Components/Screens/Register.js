@@ -35,7 +35,7 @@ function Register() {
     const { username, email, password } = values;
     let tostify, result;
     try {
-      result = await axios.post(`http://localhost:5000/api/auth/register/`, {
+      result = await axios.post(`https://railway-reservation-backend.herokuapp.com/api/auth/register/`, {
         username,
         email,
         password,

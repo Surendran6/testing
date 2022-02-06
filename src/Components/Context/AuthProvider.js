@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
       const token = localStorage.getItem("authToken");
       if (!token) throw "Login to continue";
       const userdata = await axios.get(
-        `http://localhost:5000/api/auth/isLoggedIn`,
+        `https://railway-reservation-backend.herokuapp.com/api/auth/isLoggedIn`,
         {
           headers: {
             "Content-Type": "application/json",

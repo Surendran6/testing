@@ -28,7 +28,7 @@ function Login() {
     const { email, password } = values;
     let result, tostify;
     try {
-      result = await axios.post(`http://localhost:5000/api/auth/login`, {
+      result = await axios.post(`https://railway-reservation-backend.herokuapp.com/api/auth/login`, {
         email,
         password,
       });

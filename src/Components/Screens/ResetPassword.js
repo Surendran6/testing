@@ -40,7 +40,7 @@ function ResetPassword() {
     let result, tostify;
     try {
       result = await axios.put(
-        `http://localhost:5000/api/auth/resetpassword/${URLToken.token}`,
+        `https://railway-reservation-backend.herokuapp.com/api/auth/resetpassword/${URLToken.token}`,
         { password }
       );
       console.log(result);

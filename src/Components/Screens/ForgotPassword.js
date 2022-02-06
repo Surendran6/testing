@@ -29,7 +29,7 @@ function ForgotPassword() {
     let result, tostify;
     try {
       result = await axios.post(
-        `http://localhost:5000/api/auth/forgotpassword`,
+        `https://railway-reservation-backend.herokuapp.com/api/auth/forgotpassword`,
         { email }
       );
       result = result.data;

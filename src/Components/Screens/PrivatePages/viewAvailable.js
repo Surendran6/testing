@@ -20,7 +20,7 @@ const ViewAvailable = () => {
         try {
             if (token) {
                 const result = await axios.get(
-                    `http://localhost:5000/api/private/getBerthDetails`,
+                    `https://railway-reservation-backend.herokuapp.com/api/private/getBerthDetails`,
                     {
                         headers: {
                             "Content-Type": "application/json",

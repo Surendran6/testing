@@ -13,7 +13,7 @@ const ViewTickets = () => {
   const history = useHistory();
   const getTicket = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/private/getUserTickets/${userId}`
+      `https://railway-reservation-backend.herokuapp.com/api/private/getUserTickets/${userId}`
     );
     console.log(data);
     setDetail(data.tickets);
@@ -28,7 +28,7 @@ const ViewTickets = () => {
     try {
       if (token) {
         const result = await axios.get(
-          `http://localhost:5000/api/private/getBerthDetails`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/getBerthDetails`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -144,7 +144,7 @@ const ViewTickets = () => {
     try {
       if (token) {
         const result = await axios.put(
-          `http://localhost:5000/api/private/Updatebooking/${ticket._id}`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/Updatebooking/${ticket._id}`,
           { ticket: ticket },
           {
             headers: {
@@ -204,7 +204,7 @@ const ViewTickets = () => {
     try {
       if (token) {
         const result = await axios.delete(
-          `http://localhost:5000/api/private/bookingRemove/${ticket._id}`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/bookingRemove/${ticket._id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -275,7 +275,7 @@ const ViewTickets = () => {
     try {
       if (token) {
         const result = await axios.put(
-          `http://localhost:5000/api/private/UpdateBerth/${berthAvailble._id}`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/UpdateBerth/${berthAvailble._id}`,
           { berthAvailble: berthAvailble },
           {
             headers: {
@@ -339,7 +339,7 @@ const ViewTickets = () => {
     try {
       if (token) {
         const result = await axios.post(
-          `http://localhost:5000/api/private/seat`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/seat`,
           { seatDetails: seatDetails },
           {
             headers: {

@@ -27,7 +27,7 @@ const BookingForm = () => {
     try {
       if (token) {
         const result = await axios.post(
-          `http://localhost:5000/api/private/ticket`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/ticket`,
           { bookingDetails: bookingDetails },
           {
             headers: {
@@ -88,7 +88,7 @@ const BookingForm = () => {
     try {
       if (token) {
         const result = await axios.get(
-          `http://localhost:5000/api/private/seats`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/seats`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const BookingForm = () => {
     try {
       if (token) {
         const result = await axios.delete(
-          `http://localhost:5000/api/private/seatRemove/${seat._id}`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/seatRemove/${seat._id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -159,7 +159,7 @@ const BookingForm = () => {
     try {
       if (token) {
         const result = await axios.put(
-          `http://localhost:5000/api/private/UpdateBerth/${berthAvailble._id}`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/UpdateBerth/${berthAvailble._id}`,
           { berthAvailble: berthAvailble },
           {
             headers: {
@@ -197,7 +197,7 @@ const BookingForm = () => {
     try {
       if (token) {
         const result = await axios.get(
-          `http://localhost:5000/api/private/getBerthDetails`,
+          `https://railway-reservation-backend.herokuapp.com/api/private/getBerthDetails`,
           {
             headers: {
               "Content-Type": "application/json",
