@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const BookingForm = () => {
   const { userId, setLoggedIn, getLoggedInState } = useContext(userContext);
   const [seat, setSeat] = useState(undefined);
-  const [berth, setBerth] = useState([]);
+  const [berth, setBerth] = useState(undefined);
 
   const history = useHistory();
   useEffect(() => {
@@ -233,14 +233,8 @@ const BookingForm = () => {
             },
           }
         );
-        const availBerth = result.data.berths.filter(
-          (data)=>{
-            return Number(data.available) !== 0;
-          } 
-          
-        );
-        setBerth(result.data.berths);
-        console.log(berth);
+        let berthDetails = result.data.berths;
+        checkBerthAvail(berthDetails);
       } else {
         toast.error("Something wen't wrong", {
           position: "top-right",
@@ -285,6 +279,37 @@ const BookingForm = () => {
       }
     }
   };
+
+  const checkBerthAvail = (berthDetails)=>{
+   const rac = berthDetails.find((x) => x.name === "RAC");
+        const waiting = berthDetails.find((x) => x.name === "WaitingList");
+        let count = 0;
+        berthDetails.forEach((data) => {
+          count = count + Number(data.available);
+        });
+        count = count - 28;// rac total + waiting total
+        if(count<=63){
+         berthDetails = berthDetails.filter(
+          (data)=>{
+              return Number(data.available) !== 0 && data.name !== "RAC" && data.name !=="WaitingList";
+          }           
+          );
+        } else if (rac.available!==0 ){
+         berthDetails = berthDetails.filter(
+            (data) => {
+              return Number(data.available) !== 0  && data.name !== "WaitingList";
+            }
+          );          
+        }else{
+         berthDetails = berthDetails.filter(
+            (data) => {
+              return Number(data.available) !== 0;
+            }
+          );     
+        }
+        setBerth(berthDetails);
+
+  }
 
 // const handleAge =(data,val)=> {
 // console.log(data)
@@ -349,7 +374,7 @@ const BookingForm = () => {
 
           <div className="form-group  col-sm-6">
             <Field as="select" className="form-control" name="berth" id="berth">
-              {berth.map((data) => {
+              {berth?.map((data) => {
                 return <option>{data.name}</option>;
               })}
             </Field>

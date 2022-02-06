@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ViewTickets = () => {
   const { userId, setLoggedIn, getLoggedInState } = useContext(userContext);
-  const [berth, setBerth] = useState([]);
   const [detail, setDetail] = useState([]);
   var berthDetails = [];
   const history = useHistory();
@@ -88,7 +87,6 @@ const ViewTickets = () => {
   const deleteBooking = async (ticket) => {
     const del = await deleteTicket(ticket);
     if (del) {
-       await getTicket();
       await getBerthDetail();
       //to get berth detail of particular preference
       const berthAvailble = berthDetails.find((x) => x.name === ticket.berth);
@@ -104,6 +102,7 @@ const ViewTickets = () => {
         count = count + Number(data.available);
       });
       count = count - nonConfirmed;
+
       if (count <= 63) {
         berthAvailble.available = Number(berthAvailble?.available) + 1;      
         await updateBerth(berthAvailble);
@@ -116,21 +115,86 @@ const ViewTickets = () => {
         rac.available = Number(rac?.available) + 1;
         await updateBerth(rac);
       } else {
+        //when waitinglist booked tickets
         if(waiting.available<10){
           //push to seat table
           addSeat(waitingFirst.seat);
           //for move rac use to waiting list
           waitingFirst.berth = racFirst.berth;
           waitingFirst.seat = racFirst.seat;
+          await updateTicket(waitingFirst);
            //for move confirm ticket to rac 
           racFirst.berth = ticket.berth;
           racFirst.seat = ticket.seat;
+          await updateTicket(racFirst);
         }
         //increase the waiting count
         waiting.available = Number(waiting?.available) + 1;
         await updateBerth(waiting);
       }
-     
+      await getTicket();
+    }
+  };
+
+
+  const updateTicket = async (ticket) => {
+    let token = localStorage.getItem("authToken");
+
+    try {
+      if (token) {
+        const result = await axios.put(
+          `http://localhost:5000/api/private/Updatebooking/${ticket._id}`,
+          { ticket: ticket },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.data.message) {
+        toast.error("Invalid URL", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
     }
   };
 
