@@ -6,9 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ViewTickets = () => {
-  const [detail, setDetail] = useState([]);
-  const [berth, setBerth] = useState([]);
   const { userId, setLoggedIn, getLoggedInState } = useContext(userContext);
+  const [berth, setBerth] = useState([]);
+  const [detail, setDetail] = useState([]);
+  var berthDetails = [];
   const history = useHistory();
   const getTicket = async () => {
     const { data } = await axios.get(
@@ -21,7 +22,7 @@ const ViewTickets = () => {
     getTicket();
   }, []);
 
-  const getBerthDetails = async (values) => {
+  const getBerthDetail = async (values) => {
     let token = localStorage.getItem("authToken");
 
     try {
@@ -35,11 +36,8 @@ const ViewTickets = () => {
             },
           }
         );
-        const availBerth = result.data.berths.filter((data) => {
-          return Number(data.available) !== 0;
-        });
-        setBerth(result.data.berths);
-        console.log(berth);
+        berthDetails = result.data.berths
+        console.log(berthDetails);
       } else {
         toast.error("Something wen't wrong", {
           position: "top-right",
@@ -85,14 +83,227 @@ const ViewTickets = () => {
     }
   };
 
-  const deleteBooking = (ticket) => {
-    const nonConfirmed = 28; //RAC + WAITING LIST
-    getBerthDetails();
-    const count =
-      berth.reduce((accum, item) => accum + Number(item.available), 0) - nonConfirmed;
-    if (count <= 63) {
-      const berthAvailble =  berth.find((x) => x.name === ticket.berth);
-      console.log(berthAvailble);
+
+
+  const deleteBooking = async (ticket) => {
+    const del = await deleteTicket(ticket);
+    if (del) {
+      await getBerthDetail();
+
+      const rac = berthDetails.find((x) => x.name === "RAC");
+      const waiting = berthDetails.find((x) => x.name === "WaitingList");
+      const nonConfirmed = Number(rac.total) + Number(waiting.total);
+      let count = 0;
+      berthDetails.forEach((data) => {
+        count = count + Number(data.available);
+      });
+      count = count - nonConfirmed;
+      if (count <= 63) {
+        const berthAvailble = berthDetails.find((x) => x.name === ticket.berth);
+        berthAvailble.available = Number(berthAvailble?.available) + 1;
+        await updateBerth(berthAvailble);
+      } else if (rac.available <= 18) {
+        rac.available = Number(rac?.available) + 1;
+        await updateBerth(rac);
+      } else {
+        waiting.available = Number(waiting?.available) + 1;
+        await updateBerth(waiting);
+      }
+      addSeat(ticket.seat);
+    }
+  };
+
+  const deleteTicket = async (ticket) => {
+    let token = localStorage.getItem("authToken");
+    try {
+      if (token) {
+        const result = await axios.delete(
+          `http://localhost:5000/api/private/bookingRemove/${ticket._id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (result) {
+          toast.success("Ticket Cancelled", {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          return result?.data?.message;
+        }
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.data.message) {
+        toast.error("Invalid URL", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
+    }
+  };
+
+  const updateBerth = async (berthAvailble) => {
+    let token = localStorage.getItem("authToken");
+
+    try {
+      if (token) {
+        const result = await axios.put(
+          `http://localhost:5000/api/private/UpdateBerth/${berthAvailble._id}`,
+          { berthAvailble: berthAvailble },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.data.message) {
+        toast.error("Invalid URL", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
+    }
+  };
+
+  const addSeat = async (seat) => {
+    let token = localStorage.getItem("authToken");
+    const seatDetails = {
+      seatNo: seat
+    };
+
+    try {
+      if (token) {
+        const result = await axios.post(
+          `http://localhost:5000/api/private/seat`,
+          { seatDetails: seatDetails },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.data.message) {
+        toast.error("Invalid URL", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error("Something wen't wrong", {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          localStorage.removeItem("authToken");
+          setLoggedIn(false);
+        }, 2000);
+      }
     }
   };
   return (
