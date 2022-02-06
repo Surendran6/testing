@@ -21,7 +21,7 @@ const BookingForm = () => {
     let token = localStorage.getItem("authToken");
     const bookingDetails = values;
     bookingDetails["userId"] = userId;
-    bookingDetails["seat"] = bookingDetails.age < 5 ? null: seat.seatNo;
+    bookingDetails["seat"] = bookingDetails.age < 5 ? null : seat.seatNo;
     const berthAvailble = berth.find((x) => x.name === bookingDetails.berth);
     //const [booking, setbooking] = useState(undefined);
     try {
@@ -47,7 +47,7 @@ const BookingForm = () => {
             progress: undefined,
           });
           history.push("/views");
-          if(bookingDetails.age > 5 ){
+          if (bookingDetails.age > 5) {
             deleteSeat();
             berthAvailble.available = Number(berthAvailble?.available) - 1;
             await updateBerth(berthAvailble);
@@ -56,15 +56,7 @@ const BookingForm = () => {
         console.log(result.data.ticket);
         // setbooking(result.data.ticket);
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -73,25 +65,9 @@ const BookingForm = () => {
     } catch (error) {
       console.log(error.response);
       if (error.response.data.message) {
-        toast.error("Invalid URL", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidResponse();
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -123,15 +99,7 @@ const BookingForm = () => {
         console.log(result.data.seat);
         setSeat(result.data.seat);
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -140,25 +108,9 @@ const BookingForm = () => {
     } catch (error) {
       console.log(error.response);
       if (error.response.data.message) {
-        toast.error("Invalid URL", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidResponse();
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -181,15 +133,7 @@ const BookingForm = () => {
           }
         );
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -198,25 +142,9 @@ const BookingForm = () => {
     } catch (error) {
       console.log(error.response);
       if (error.response.data.message) {
-        toast.error("Invalid URL", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidResponse();
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -242,15 +170,7 @@ const BookingForm = () => {
         );
 
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -259,25 +179,9 @@ const BookingForm = () => {
     } catch (error) {
       console.log(error.response);
       if (error.response.data.message) {
-        toast.error("Invalid URL", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidResponse();
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -304,15 +208,7 @@ const BookingForm = () => {
         let berthDetails = result.data.berths;
         checkBerthAvail(berthDetails);
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+       
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -321,25 +217,9 @@ const BookingForm = () => {
     } catch (error) {
       console.log(error.response);
       if (error.response.data.message) {
-        toast.error("Invalid URL", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidResponse();
       } else {
-        toast.error("Something wen't wrong", {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        invalidError();
         setTimeout(() => {
           localStorage.removeItem("authToken");
           setLoggedIn(false);
@@ -350,7 +230,6 @@ const BookingForm = () => {
 
   const checkBerthAvail = (berthDetails) => {
     const rac = berthDetails.find((x) => x.name === "RAC");
-    const waiting = berthDetails.find((x) => x.name === "WaitingList");
     let count = 0;
     berthDetails.forEach((data) => {
       count = count + Number(data.available);
@@ -376,19 +255,36 @@ const BookingForm = () => {
       );
     }
     setBerth(berthDetails);
-
   }
 
-  // const handleAge =(data,val)=> {
-  // console.log(data)
-  //   }
+  const invalidError = () => {
+    toast.error("Something wen't wrong", {
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  const invalidResponse = () => {
+    toast.error("Invalid", {
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   return (
     <div className="container align">
-      <div className="heading">
-        <h1 >Book ticket</h1>
-        </div>
-
+      <div className="heading">Book ticket
+      </div>
       <label class="switch">
         <input type="checkbox"
           onChange={() => {

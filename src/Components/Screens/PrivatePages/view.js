@@ -393,8 +393,8 @@ const ViewTickets = () => {
     }
   };
   return (
-    <div>
-      <h1>View Booked Tickets</h1>
+    <div className="view-container">
+      <div className="title-container">View Booked Tickets</div>
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -432,7 +432,7 @@ const ViewTickets = () => {
             })
           ) : (
             <tr>
-              <h1>No ticket is booked</h1>
+              <h3>No ticket is booked</h3>
             </tr>
           )}
         </tbody>

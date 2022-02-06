@@ -14,8 +14,7 @@ function Navbar() {
         history.push('/homepage')
     }
     return (
-        <nav className="navbar navbar-expand-lg fixed-top navbar-light">
-           {/* <img className="brand-img" src={shortly} alt = "shortly" /> */}
+        <nav className="navbar navbar-expand-lg fixed-top navbar-light">          
            <h2 className="logo">Quickly</h2>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span className="navbar-toggler-icon"></span>
@@ -45,7 +44,7 @@ function Navbar() {
                         <>
                         <li className="nav-item pr-3 active">
                             <Link className="nav-link  text-info  text-center" to="/dashboard">
-                                <i className="fad fa-chart-bar"></i>
+                                    <i className="fad fa fa-ticket"></i>
                                 <span className="pl-2">Book Ticket</span>
                             </Link>
                         </li>

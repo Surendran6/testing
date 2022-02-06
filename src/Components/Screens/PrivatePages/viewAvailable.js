@@ -76,8 +76,8 @@ const ViewAvailable = () => {
         }
     };
   return (
-      <div>
-          <h1>View Avaiable Tickets</h1>
+      <div className="view-container">
+          <div className="title-container">View Avaiable Tickets</div>
           <table className="table table-bordered">
               <thead>
                   <tr>

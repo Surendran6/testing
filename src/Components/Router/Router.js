@@ -4,17 +4,12 @@ import { useHistory } from 'react-router'
 
 //custom imports
 import Navbar from '../Layouts/Navbar'
-import Footer from '../Layouts/Footer'
-
 import HomePage from '../Screens/HomePage'
 import Login from '../Screens/Login'
 import Register from '../Screens/Register'
 import ForgotPassword from '../Screens/ForgotPassword'
 import ResetPassword from '../Screens/ResetPassword'
-import ActivateAccount from '../Screens/ActivateAccount'
 import Booking from "../Screens/PrivatePages/Booking";
-import Shortner from '../Screens/PrivatePages/Shortner';
-import URLViews from '../Screens/PrivatePages/URLViews';
 import Viewtable from "../Screens/PrivatePages/view";
 import ViewAvailable from "../Screens/PrivatePages/viewAvailable";
 import { userContext } from '../Context/AuthProvider';
@@ -24,18 +19,12 @@ function Router() {
     const history = useHistory()
     return (
       <>
-        <BrowserRouter basename="/Shortly">
+        <BrowserRouter basename="/quickly">
           <Navbar />
-
           <div className="section">
             <Switch>
               <Route path="/homepage" component={HomePage} />
-              <Route exact path="/login" component={Login} />
-              <Route
-                exact
-                path="/activateaccount/:token"
-                component={ActivateAccount}
-              />
+              <Route exact path="/login" component={Login} />             
               <Route exact path="/signup" component={Register} />
               <Route exact path="/forgotpassword" component={ForgotPassword} />
               <Route
@@ -46,15 +35,13 @@ function Router() {
 
               {loggedIn === true ? (
                 <Switch>
-                  <Route exact path="/dashboard" component={Booking} />
-                  <Route exact path="/shortner" component={Shortner} />
+                  <Route exact path="/dashboard" component={Booking} />                  
                   <Route exact path="/views" component={Viewtable} />
                   <Route exact path="/viewsAvaiable" component={ViewAvailable} />
                 </Switch>
               ) : (
                 ""
               )}
-
               <Route path="/">
                 <Redirect to="/homepage" />
               </Route>
