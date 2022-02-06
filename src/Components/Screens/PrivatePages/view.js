@@ -88,28 +88,49 @@ const ViewTickets = () => {
   const deleteBooking = async (ticket) => {
     const del = await deleteTicket(ticket);
     if (del) {
+       await getTicket();
       await getBerthDetail();
-
+      //to get berth detail of particular preference
+      const berthAvailble = berthDetails.find((x) => x.name === ticket.berth);
       const rac = berthDetails.find((x) => x.name === "RAC");
       const waiting = berthDetails.find((x) => x.name === "WaitingList");
       const nonConfirmed = Number(rac.total) + Number(waiting.total);
+      // detail list first waiting and rac first ticket
+      const waitingFirst = detail.find((x) => x.berth === "WaitingList");
+      const racFirst = detail.find((x) => x.berth === "RAC");
+      
       let count = 0;
       berthDetails.forEach((data) => {
         count = count + Number(data.available);
       });
       count = count - nonConfirmed;
       if (count <= 63) {
-        const berthAvailble = berthDetails.find((x) => x.name === ticket.berth);
-        berthAvailble.available = Number(berthAvailble?.available) + 1;
+        berthAvailble.available = Number(berthAvailble?.available) + 1;      
         await updateBerth(berthAvailble);
-      } else if (rac.available <= 18) {
+      } else if (rac.available <= 63) {
+        //push to seat table
+        addSeat(racFirst.seat);
+         //for move confirm ticket to rac 
+        racFirst.berth = ticket.berth;
+        racFirst.seat = ticket.seat;
         rac.available = Number(rac?.available) + 1;
         await updateBerth(rac);
       } else {
+        if(waiting.available<10){
+          //push to seat table
+          addSeat(waitingFirst.seat);
+          //for move rac use to waiting list
+          waitingFirst.berth = racFirst.berth;
+          waitingFirst.seat = racFirst.seat;
+           //for move confirm ticket to rac 
+          racFirst.berth = ticket.berth;
+          racFirst.seat = ticket.seat;
+        }
+        //increase the waiting count
         waiting.available = Number(waiting?.available) + 1;
         await updateBerth(waiting);
       }
-      addSeat(ticket.seat);
+     
     }
   };
 
