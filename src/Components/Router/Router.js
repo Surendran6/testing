@@ -16,6 +16,7 @@ import Booking from "../Screens/PrivatePages/Booking";
 import Shortner from '../Screens/PrivatePages/Shortner';
 import URLViews from '../Screens/PrivatePages/URLViews';
 import Viewtable from "../Screens/PrivatePages/view";
+import ViewAvailable from "../Screens/PrivatePages/viewAvailable";
 import { userContext } from '../Context/AuthProvider';
 
 function Router() {
@@ -48,6 +49,7 @@ function Router() {
                   <Route exact path="/dashboard" component={Booking} />
                   <Route exact path="/shortner" component={Shortner} />
                   <Route exact path="/views" component={Viewtable} />
+                  <Route exact path="/viewsAvaiable" component={ViewAvailable} />
                 </Switch>
               ) : (
                 ""

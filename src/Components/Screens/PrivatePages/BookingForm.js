@@ -317,7 +317,7 @@ const BookingForm = () => {
 
   return (
     <div className="container align">
-      <h1>Book ticket</h1>
+      <h1 className="heading">Book ticket</h1>
       <Formik
         initialValues={{
           bookingName: "",
@@ -336,7 +336,7 @@ const BookingForm = () => {
         onSubmit={onSubmit}
       >
         <Form className="form-horizontal">
-          <div className="form-group col-sm-6">
+          <div className="form-group col-sm-12">
             <Field
               type="text"
               className="form-control"
@@ -346,7 +346,7 @@ const BookingForm = () => {
             />
             <ErrorMessage name="bookingName" className="text-danger" />
           </div>
-          <div className="form-group  col-sm-6">
+          <div className="form-group  col-sm-12">
             <Field
               as="select"
               className="form-control"
@@ -359,7 +359,7 @@ const BookingForm = () => {
             </Field>
             <ErrorMessage name="gender" className="text-danger" />
           </div>
-          <div className="form-group col-sm-6">
+          <div className="form-group col-sm-12">
             <Field
               type="number"
               min="1"
@@ -372,7 +372,7 @@ const BookingForm = () => {
             <ErrorMessage name="age" className="text-danger" />
           </div>
 
-          <div className="form-group  col-sm-6">
+          <div className="form-group  col-sm-12">
             <Field as="select" className="form-control" name="berth" id="berth">
               {berth?.map((data) => {
                 return <option>{data.name}</option>;
@@ -380,9 +380,12 @@ const BookingForm = () => {
             </Field>
             <ErrorMessage name="berth" className="text-danger" />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <div className="button-container">
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </div>
+
         </Form>
       </Formik>
     </div>

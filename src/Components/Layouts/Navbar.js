@@ -1,6 +1,5 @@
 import React,{useContext} from 'react'
 import './Navbar.css';
-import shortly from '../../Images/shortly.png'
 import {Link} from 'react-router-dom'
 import { useHistory } from 'react-router';
 //Custom Imports
@@ -16,7 +15,8 @@ function Navbar() {
     }
     return (
         <nav className="navbar navbar-expand-lg fixed-top navbar-light">
-           <img className="brand-img" src={shortly} alt = "shortly" />
+           {/* <img className="brand-img" src={shortly} alt = "shortly" /> */}
+           <h2 className="logo">Quickly</h2>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -46,19 +46,19 @@ function Navbar() {
                         <li className="nav-item pr-3 active">
                             <Link className="nav-link  text-info  text-center" to="/dashboard">
                                 <i className="fad fa-chart-bar"></i>
-                                <span className="pl-2">Dashboard</span>
+                                <span className="pl-2">Book Ticket</span>
                             </Link>
                         </li>
                         <li className="nav-item pr-3">
-                            <Link className="nav-link text-info text-center" to="/shortner">
+                                <Link className="nav-link text-info text-center" to="/viewsAvaiable">
                                 <i className="fad fa-sort-size-down"></i>
-                                <span className="pl-2">Shortner</span>
+                                <span className="pl-2">Avaiable Tickets</span>
                             </Link>
                         </li>
                         <li className="nav-item pr-3">
                             <Link className="nav-link text-info  text-center" to="/views">
                             <i className="fad fa-eye"></i>
-                            <span className="pl-2">Views</span></Link>
+                            <span className="pl-2">View Booked Tickets</span></Link>
                         </li>
                         <li className="nav-item pr-3">
                             <button className = "btn btn-danger btn-sm" onClick = {Logout}>Logout</button>

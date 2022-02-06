@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const ViewTickets = () => {
   const { userId, setLoggedIn, getLoggedInState } = useContext(userContext);
   const [detail, setDetail] = useState([]);
@@ -393,7 +394,7 @@ const ViewTickets = () => {
   };
   return (
     <div>
-      <h1>View ticket</h1>
+      <h1>View Booked Tickets</h1>
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -437,12 +438,16 @@ const ViewTickets = () => {
         </tbody>
       </table>
       {detail.length > 0 ? (
-        <button
-          className="btn btn-primary"
-          onClick={() => history.push("/dashboard")}
-        >
-          ADD TICKET
-        </button>
+        <div>
+          <button
+            className="btn btn-primary"
+            onClick={() => history.push("/dashboard")}
+          >
+            ADD TICKET
+          </button>
+        </div>
+        
+        
       ) : (
         <button
           className="btn btn-primary"
